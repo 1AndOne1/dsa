@@ -25,3 +25,33 @@ catch (Exception ex)
     Console.WriteLine(ex);
     throw;
 }
+
+using System;
+using System.IO;
+
+public class Program
+{
+    public static void Main()
+    {
+        // Вызов функции с указанием пути к исходной картинке и нового имени файла
+        CopyImageAsBytes("путь_к_исходной_картинке.jpg", "новое_имя_файла.jpg");
+    }
+
+    public static void CopyImageAsBytes(string sourceImagePath, string newImageName)
+    {
+        try
+        {
+            // Чтение изображения в виде массива байтов
+            byte[] imageBytes = File.ReadAllBytes(sourceImagePath);
+
+            // Сохранение массива байтов в новый файл
+            File.WriteAllBytes(newImageName, imageBytes);
+
+            Console.WriteLine("Изображение успешно скопировано в новый файл с именем " + newImageName);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Произошла ошибка при копировании изображения: " + ex.Message);
+        }
+    }
+}
