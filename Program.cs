@@ -55,3 +55,25 @@ public class Program
         }
     }
 }
+
+using System;
+﻿using System.Net.Sockets;
+using System.Text;
+        using var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        try {
+            await client.ConnectAsync("192.168.220.139", 1777);
+
+            string filePath = @"/home/user/obj/step/cow.webp";
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+
+            await client.SendAsync(fileBytes, SocketFlags.None);
+            byte[] data = new byte[512];
+        int bytes = await client.ReceiveAsync(data, SocketFlags.None);
+
+            Console.WriteLine("Done");
+        }
+        catch (Exception ex)
+        {
+    Console.WriteLine(ex);
+    throw;
+    }
